@@ -110,7 +110,7 @@ export default {
           {'url':'./src/assets/1.jpeg','price':11,'personNumber':3383,'favorablePrice':17,'commodityTit':'蓝牙耳机','favorable':1},
           {'url':'./src/assets/2.jpeg','price':11,'personNumber':666,'favorablePrice':16,'commodityTit':'蓝牙耳机','favorable':2},
           {'url':'./src/assets/3.jpeg','price':11,'personNumber':777,'favorablePrice':15,'commodityTit':'蓝牙耳机','favorable':1} ,
-          {'url':'./src/assets/4.jpeg','price':11,'personNumber':333,'favorablePrice':1,'commodityTit':'蓝牙耳机','favorable':1},
+          {'url':'./src/assets/4.jpeg','price':11,'personNumber':444,'favorablePrice':1,'commodityTit':'蓝牙耳机','favorable':1},
           {'url':'./src/assets/1.jpeg','price':11,'personNumber':333,'favorablePrice':1,'commodityTit':'蓝牙耳机','favorable':1},
           {'url':'./src/assets/2.jpeg','price':11,'personNumber':333,'favorablePrice':1,'commodityTit':'蓝牙耳机','favorable':2},
           {'url':'./src/assets/3.jpeg','price':11,'personNumber':333,'favorablePrice':14,'commodityTit':'蓝牙耳机','favorable':1},
@@ -120,7 +120,7 @@ export default {
           {'url':'./src/assets/3.jpeg','price':11,'personNumber':333,'favorablePrice':1,'commodityTit':'蓝牙耳机','favorable':1},
           {'url':'./src/assets/4.jpeg','price':11,'personNumber':333,'favorablePrice':11,'commodityTit':'蓝牙耳机','favorable':2},
           {'url':'./src/assets/1.jpeg','price':11,'personNumber':333,'favorablePrice':12,'commodityTit':'蓝牙耳机','favorable':1},
-          {'url':'./src/assets/2.jpeg','price':11,'personNumber':333,'favorablePrice':13,'commodityTit':'蓝牙耳机','favorable':1}
+          {'url':'./src/assets/2.jpeg','price':11,'personNumber':222,'favorablePrice':13,'commodityTit':'蓝牙耳机','favorable':1}
         ],
         selected:'1',
         loading:false,
