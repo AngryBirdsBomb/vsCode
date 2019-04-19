@@ -6,7 +6,6 @@
         <mt-tab-item id="3">电脑办公</mt-tab-item>
         <mt-tab-item id="4">图书音像</mt-tab-item>
       </mt-navbar>
-
       <!-- tab-container -->
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
@@ -23,12 +22,6 @@
               <p><mt-button type="danger" size="small" class="colorWhite">去<span class="fontSizeB">拼单</span>&#165;{{item.favorablePrice}}</mt-button><span class="priceStyle">&#165;{{item.price}}</span></p>
             </li>
           </ul>
-          <mt-popup
-            v-model="popupVisible"
-            popup-transition="popup-fade"
-            position="top">
-            更新了{{list.length+1-oldLength}}条信息!
-          </mt-popup>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
           <ul class="clearfix" 
@@ -44,12 +37,6 @@
               <p><mt-button type="danger" size="small" class="colorWhite">去<span class="fontSizeB">拼单</span>&#165;{{item.favorablePrice}}</mt-button><span class="priceStyle">&#165;{{item.price}}</span></p>
             </li>
           </ul>
-          <mt-popup
-            v-model="popupVisible"
-            popup-transition="popup-fade"
-            position="top">
-            更新了{{list.length+1-oldLength}}条信息!
-          </mt-popup>
         </mt-tab-container-item>
         <mt-tab-container-item id="3">
           <ul class="clearfix" 
@@ -65,12 +52,6 @@
               <p><mt-button type="danger" size="small" class="colorWhite">去<span class="fontSizeB">拼单</span>&#165;{{item.favorablePrice}}</mt-button><span class="priceStyle">&#165;{{item.price}}</span></p>
             </li>
           </ul>
-          <mt-popup
-            v-model="popupVisible"
-            popup-transition="popup-fade"
-            position="top">
-            更新了{{list.length+1-oldLength}}条信息!
-          </mt-popup>
         </mt-tab-container-item>
         <mt-tab-container-item id="4">
           <ul class="clearfix" 
@@ -86,14 +67,14 @@
               <p><mt-button type="danger" size="small" class="colorWhite">去<span class="fontSizeB">拼单</span>&#165;{{item.favorablePrice}}</mt-button><span class="priceStyle">&#165;{{item.price}}</span></p>
             </li>
           </ul>
-          <mt-popup
-            v-model="popupVisible"
-            popup-transition="popup-fade"
-            position="top">
-            更新了{{list.length+1-oldLength}}条信息!
-          </mt-popup>
         </mt-tab-container-item>
       </mt-tab-container>
+      <mt-popup
+        v-model="popupVisible"
+        popup-transition="popup-fade"
+        >
+        更新了{{uploadCount}}条信息!
+      </mt-popup>
     </div>
 </template>
 <script type="text/javascript">
@@ -125,14 +106,17 @@ export default {
         selected:'1',
         loading:false,
         popupVisible:false,
+        uploadCount:'',
         oldLength:''
     }
   },
   methods: {
     loadMore(){
         this.loading=true;
-        //Indicator.open('加载中...');
-        this.popupVisible=true;
+        Indicator.open({
+          text: '信息加载中...',
+          spinnerType: 'fading-circle'
+        });
         this.oldLength=this.list.length+1;
         setTimeout(()=>{
           for(let i=0;i<2;i++){
@@ -142,9 +126,14 @@ export default {
             );
           }
           this.loading=false;
-          this.popupVisible=false;
-          //Indicator.close();
-        },3000);
+          this.popupVisible=true;
+          this.uploadCount=this.list.length+1-this.oldLength;
+          setTimeout(()=>{
+            this.popupVisible=false;
+          },3000);
+          Indicator.close();
+          console.log(this.list.length+1-this.oldLength);
+        },2000);
         
     }
   }
@@ -167,7 +156,7 @@ li{margin-bottom: .625rem;}
   margin-bottom:2.875rem;
 }
 .mint-navbar .mint-tab-item.is-selected{
-  z-index: 10000;
+  z-index: 1000;
 }
 .mint-tab-container{
   margin-bottom:2.875rem;
@@ -225,10 +214,10 @@ li{margin-bottom: .625rem;}
 }
 .mint-popup{
   background:none;
-  color: #fff; 
+  color: #fff;
   line-height: 2.5rem;
-}
-.v-modal{
-  height:2.5rem;
+  padding:0 1.25rem;
+  border-radius: .25rem;
+  font-size: .875rem;
 }
 </style>
