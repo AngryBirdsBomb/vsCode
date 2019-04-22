@@ -1,6 +1,6 @@
 <template>
     <div id="person_center">
-      <mt-header title="电脑数码" fixed>
+      <mt-header title="个人中心" fixed>
           <router-link to="/" slot="left">
               <mt-button icon="back">返回</mt-button>
           </router-link>

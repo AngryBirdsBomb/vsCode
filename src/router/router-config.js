@@ -14,6 +14,10 @@ export default{
             ]
 
         },
+        { 
+            path: '/commodityId/:commodityId', 
+            component: CommodityDetails
+        },
         { path: '*', redirect: '/home' }
     ]
 }
