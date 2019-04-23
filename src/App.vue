@@ -64,4 +64,14 @@ export default {
   margin-top: 2.625rem;
   font-size: .75rem;
 }
+ul,li{list-style: none;margin:0;}
+.clearfix:after{
+  clear: both;
+  content: "";
+  visibility: hidden;
+  display: block;
+}
+.clearfix{
+  zoom: 1;
+}
 </style>

@@ -10,12 +10,12 @@
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
           <mt-loadmore :top-method="loadTop" v-if="selected==1" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" @top-status-change="handleTopChange" ref="loadmore" :auto-fill="false">
-            <ul class="clearfix" ref="commodityList">
-              <li v-for="(item,index) in list" :key="index" @click="lookCommodityDetail(index)">
+            <ul class="clearfix commodityList_ul" ref="commodityList">
+              <li v-for="(item,index) in list" :key="index" >
                 <img v-lazy="item.url">
                 <h4 class="commodityTit" :title="item.commodityTit">{{item.commodityTit}}</h4>
                 <p class="personNumberStyle">已有{{item.personNumber}}万人拼单</p>
-                <p><mt-button type="danger" size="small" class="colorWhite">去<span class="fontSizeB">拼单</span>&#165;{{item.favorablePrice}}</mt-button><span class="priceStyle">&#165;{{item.price}}</span></p>
+                <p><mt-button type="danger" size="small" class="colorWhite" @click="lookCommodityDetail(index)">去<span class="fontSizeB">拼单</span>&#165;{{item.favorablePrice}}</mt-button><span class="priceStyle">&#165;{{item.price}}</span></p>
               </li>
             </ul>
             <div slot="top" class="mint-loadmore-top">
@@ -28,7 +28,7 @@
           </mt-loadmore>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
-          <ul class="clearfix"
+          <ul class="clearfix commodityList_ul"
             v-infinite-scroll="loadMore"
             infinite-scroll-disabled="loading"
             infinite-scroll-distance="60"
@@ -40,12 +40,12 @@
               <img v-lazy="item.url">
               <h4 class="commodityTit" :title="item.commodityTit">{{item.commodityTit}}</h4>
               <p class="personNumberStyle">已有{{item.personNumber}}万人拼单</p>
-              <p><mt-button type="danger" size="small" class="colorWhite">去<span class="fontSizeB">拼单</span>&#165;{{item.favorablePrice}}</mt-button><span class="priceStyle">&#165;{{item.price}}</span></p>
+              <p><mt-button type="danger" size="small" class="colorWhite" @click="lookCommodityDetail(index)">去<span class="fontSizeB">拼单</span>&#165;{{item.favorablePrice}}</mt-button><span class="priceStyle">&#165;{{item.price}}</span></p>
             </li>
           </ul>
         </mt-tab-container-item>
         <mt-tab-container-item id="3">
-          <ul class="clearfix" 
+          <ul class="clearfix commodityList_ul" 
             v-infinite-scroll="loadMore"
             infinite-scroll-disabled="loading"
             infinite-scroll-distance="60"
@@ -57,12 +57,12 @@
               <img v-lazy="item.url">
               <h4 class="commodityTit" :title="item.commodityTit">{{item.commodityTit}}</h4>
               <p class="personNumberStyle">已有{{item.personNumber}}万人拼单</p>
-              <p><mt-button type="danger" size="small" class="colorWhite">去<span class="fontSizeB">拼单</span>&#165;{{item.favorablePrice}}</mt-button><span class="priceStyle">&#165;{{item.price}}</span></p>
+              <p><mt-button type="danger" size="small" class="colorWhite" @click="lookCommodityDetail(index)">去<span class="fontSizeB">拼单</span>&#165;{{item.favorablePrice}}</mt-button><span class="priceStyle">&#165;{{item.price}}</span></p>
             </li>
           </ul>
         </mt-tab-container-item>
         <mt-tab-container-item id="4">
-          <ul class="clearfix" 
+          <ul class="clearfix commodityList_ul" 
             v-infinite-scroll="loadMore"
             infinite-scroll-disabled="loading"
             infinite-scroll-distance="60"
@@ -74,7 +74,7 @@
               <img v-lazy="item.url">
               <h4 class="commodityTit" :title="item.commodityTit">{{item.commodityTit}}</h4>
               <p class="personNumberStyle">已有{{item.personNumber}}万人拼单</p>
-              <p><mt-button type="danger" size="small" class="colorWhite">去<span class="fontSizeB">拼单</span>&#165;{{item.favorablePrice}}</mt-button><span class="priceStyle">&#165;{{item.price}}</span></p>
+              <p><mt-button type="danger" size="small" class="colorWhite" @click="lookCommodityDetail(index)">去<span class="fontSizeB">拼单</span>&#165;{{item.favorablePrice}}</mt-button><span class="priceStyle">&#165;{{item.price}}</span></p>
             </li>
           </ul>
         </mt-tab-container-item>
@@ -176,16 +176,6 @@ export default {
 }
 </script>
 <style lang="" >
-ul,li{list-style: none;margin:0;}
-.clearfix:after{
-  clear: both;
-  content: "";
-  visibility: hidden;
-  display: block;
-}
-.clearfix{
-  zoom: 1;
-}
 .commodityList{
   background-color: #f4f5f7;
   margin-bottom:2.875rem;
@@ -205,18 +195,21 @@ ul,li{list-style: none;margin:0;}
 }
 .mint-tab-container-item ul{
   padding:0;
-  margin-left: -0.35rem;
+  
   /* height: 13.5rem; */
   justify-content:center;
   display: -webkit-flex;
   display:flex;
   width: 100%;
   flex-wrap:wrap;
-  height:12rem;
-  overflow-y: auto;
   margin-top:.625rem;
 }
-.mint-tab-container-item li{
+.mint-tab-container-item ul.commodityList_ul{
+  height:12rem;
+  overflow-y: auto;
+  margin-left: -0.35rem;
+}
+.commodityList_ul li{
   margin-left: .75rem;
   margin-bottom: 1rem;
   overflow: hidden;
@@ -224,18 +217,18 @@ ul,li{list-style: none;margin:0;}
   flex:1 1 130px;
   border-radius: .125rem;
 }
-.mint-tab-container-item li img{
+.commodityList_ul li img{
   width:100%;
   height:6.5rem;
 }
-.mint-tab-container-item li p,.mint-tab-container-item li h4{
+.commodityList_ulli p,.commodityList_ul li h4{
   white-space:nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .colorWhite{color: #fff;}
 .fontSizeB{font-size: 1rem;}
-.priceStyle{
+span.priceStyle{
   color:#ccc;
   text-decoration: line-through;
   font-size: 1rem;

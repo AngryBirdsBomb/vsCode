@@ -2,7 +2,7 @@
     <div id="home">
       <mt-header title="首页" fixed>
         <mt-button  slot="left" @click="handleClose">关闭</mt-button>
-        <mt-button icon="more" slot="right"></mt-button>
+        <!-- <mt-button icon="more" slot="right"></mt-button> -->
       </mt-header>
       <mt-swipe :auto="4000">
         <mt-swipe-item><img src="../assets/1.jpeg" alt="" /></mt-swipe-item>

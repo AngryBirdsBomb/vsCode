@@ -10,12 +10,21 @@
         <mt-swipe-item v-for="(url,index) in list.url" :key="index"><img v-lazy="url" alt="" /></mt-swipe-item>
         <span class="imgNumber">{{imgNumber}}/{{list.url.length}}</span>
       </mt-swipe>
-      <div class="commodityInfo">
-        <h4 class="commodityTit">{{commodityTit}}</h4>
-        <p><span class="promotionIcon">促销</span><span>满99元，享部分地区包邮</span></p>
-        <p class="personNumberStyle">已有{{personNumber}}万人拼单</p>
-        <p><mt-button type="danger" size="small" class="colorWhite">去<span class="fontSizeB">拼单</span>&#165;{{favorablePrice}}</mt-button><span class="priceStyle">&#165;{{price}}</span></p>
-      </div>
+      <ul class="commodityInfo">
+        <li><p class="favorablePrice"><span>&#165;{{favorablePrice}}</span> 大促销</p></li>
+        <li><p class="priceStyle">原价<span class="price">&#165;{{price}}</span></p></li>
+        <li><h4 class="commodityTit">{{commodityTit}}</h4></li>
+        <li>
+          <ul class="tip clearfix">
+            <li>快递<span v-text="favorablePrice>=12?'免运费':'运费20'"></span></li>
+            <li>月销量<span>{{SalesVolume}}</span></li>
+            <li>销售地<span>{{saleSites}}</span></li>
+          </ul>
+        </li>
+        <li><p class=""><span class="promotionIcon">促销</span><span>满99元，享部分地区包邮</span></p></li>
+        <li><p class="personNumberStyle">已有{{personNumber}}万人拼单</p></li>
+        <li><mt-button type="danger" size="small" class="colorWhite">去<span class="fontSizeB">拼单</span></mt-button></li>
+      </ul>
       <div class="commodityListTab">
         <mt-navbar v-model="sel">
           <mt-tab-item id="1">商品</mt-tab-item>
@@ -56,7 +65,7 @@ export default {
         'url':['./src/assets/1.jpeg','./src/assets/2.jpeg','./src/assets/3.jpeg','./src/assets/4.jpeg'],
         'price':11,
         'personNumber':222,
-        'favorablePrice':1,
+        'favorablePrice':12,
         'commodityTit':'蓝牙耳机123蓝牙耳机123蓝牙耳机123蓝牙耳机123蓝牙耳机123蓝牙耳机123蓝牙耳机123蓝牙耳机123蓝牙耳机123蓝牙耳机123蓝牙耳机123蓝牙耳机123',
         'favorable':1
       },
@@ -67,7 +76,9 @@ export default {
       favorable:'',
       imgNumber:'1',
       sel:'1',
-      info:'自购机日起（以购机发票为准），如因质量问题或故障，凭厂商维修中心或特约维修点的质量检测证明，享受7日内退货，30日内换货，30日以上在质保期内享受免费保修等三包服务！注：单独购买手机配件产品的用户，请完好保存配件外包装以及发票原件，如无法提供上述凭证的，将无法进行正常的配件保修或更换。'
+      info:'自购机日起（以购机发票为准），如因质量问题或故障，凭厂商维修中心或特约维修点的质量检测证明，享受7日内退货，30日内换货，30日以上在质保期内享受免费保修等三包服务！注：单独购买手机配件产品的用户，请完好保存配件外包装以及发票原件，如无法提供上述凭证的，将无法进行正常的配件保修或更换。',
+      SalesVolume:'20',
+      saleSites:'北京 北京'
         
     };
   },
@@ -156,11 +167,30 @@ ul,li{
   color: #f00;
   border-radius: .25rem;
 }
+.favorablePrice{
+  color:#f00;
+  font-size: .75rem;
+}
+.favorablePrice  span{
+  font-size: 1.125rem;
+}
 .commodityInfo .priceStyle{
-  margin-left: .625rem;
-  text-decoration: line-through;
   color: #999;
-  font-size: .875rem;
+}
+.commodityInfo .priceStyle .price{
+  text-decoration: line-through;
+  margin-left: .625rem;
+}
+.tip{
+  color:#999;
+  display: -webkit-flex;
+  display: flex;
+}
+.tip li{
+  flex: 1 1 35%;
+}
+.tip span{
+  margin-left: .625rem;
 }
 .imgNumber{
   position: absolute;
