@@ -1,11 +1,8 @@
 <template>
     <div id="home">
-      <mt-header title="电脑数码" fixed>
-        <router-link to="/" slot="left">
-            <mt-button icon="back">返回</mt-button>
-        </router-link>
-        <!-- <mt-button @click="handleClose" slot="right">关闭</mt-button> -->
-        <mt-button  slot="right">关闭</mt-button>
+      <mt-header title="首页" fixed>
+        <mt-button  slot="left" @click="handleClose">关闭</mt-button>
+        <!-- <mt-button icon="more" slot="right"></mt-button> -->
       </mt-header>
       <mt-swipe :auto="4000">
         <mt-swipe-item><img src="../assets/1.jpeg" alt="" /></mt-swipe-item>
@@ -25,6 +22,13 @@ export default {
   },
   components:{
     'commodityList':CommodityList
+  },
+  methods:{
+    handleClose:()=>{
+      window.opener=null;
+      window.open('','_self');
+      window.close();
+    }
   }
 }
 </script>
