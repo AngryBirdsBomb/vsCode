@@ -74,4 +74,12 @@ ul,li{list-style: none;margin:0;}
 .clearfix{
   zoom: 1;
 }
+.fl{
+  float: left;
+  display: inline;
+}
+.fr{
+  float: right;
+  display: inline;
+}
 </style>
