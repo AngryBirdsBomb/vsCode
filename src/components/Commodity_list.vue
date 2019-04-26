@@ -82,6 +82,7 @@
       <mt-popup
         v-model="popupVisible"
         popup-transition="popup-fade"
+        class="uploadCountPopup"
         >
         更新了{{uploadCount}}条信息!
       </mt-popup>
@@ -245,7 +246,7 @@ span.priceStyle{
   text-overflow: unset;
   border-radius: .125rem;
 }
-.mint-popup{
+.mint-popup.uploadCountPopup{
   background:none;
   color: #fff;
   line-height: 2.5rem;

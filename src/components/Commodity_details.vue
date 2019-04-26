@@ -40,6 +40,40 @@
         <mt-tab-container v-model="sel">
           <mt-tab-container-item id="1">
             <ul>
+              <li>
+                <ul class="rateBox">
+                  <li class="clearfix">
+                    <p class="fl">宝贝描述:</p>
+                    <el-rate
+                      v-model="rateCount1"
+                      show-text
+                      :texts="rateText"  
+                      class="fl"
+                    >
+                    </el-rate>
+                  </li>
+                  <li class="clearfix rateBox">
+                    <p class="fl">卖家服务:</p>
+                    <el-rate
+                      v-model="rateCount2"
+                      show-text
+                      :texts="rateText"  
+                      class="fl"
+                    >
+                    </el-rate>
+                  </li>
+                  <li class="clearfix rateBox">
+                    <p class="fl">物流服务:</p>
+                    <el-rate
+                      v-model="rateCount3"
+                      show-text
+                      :texts="rateText"  
+                      class="fl"
+                    >
+                    </el-rate>
+                  </li>
+                </ul>
+              </li>
               <li v-for="(item,index) in list.url" :key="index">
                 <img v-lazy="item">
                 <p>{{info}}</p>
@@ -47,8 +81,44 @@
             </ul>
           </mt-tab-container-item>
           <mt-tab-container-item id="2">
-            <ul>
-              <li v-for="(item,index) in list.url" :key="index"><img v-lazy="item" alt="" /></li>
+            <ul class="evaluationList">
+              <li v-for="(item,index) in evaluation" :key="index" v-cloak>
+                <div class="clearfix evaluationInfo">
+                  <div class="userInfo fl">
+                      <img src="../assets/logo.png" />
+                      <p>{{item.userName}}</p>
+                  </div>
+                  <div class="fl userEvaluation">
+                    <el-rate
+                      v-model="item.rateCount"
+                      disabled
+                      show-score
+                      text-color="#ff9900"
+                      score-template="{value}"
+                    >
+                    </el-rate>
+                    <h5>{{item.content}}</h5>
+                  </div>
+                </div>
+                
+                <div class="clearfix color_gray">
+                  <span class="fl">{{item.time | getNowTime}}</span>
+                  <p class="fr clearfix evaluationCount">
+                    <span v-if="item.up>99" class="clearfix fl">
+                      <mt-button  type="default" class="fl" size="small" @click.native="addUp(1,index)">顶</mt-button><mt-badge size="small" class="fl" type="success">99+</mt-badge>
+                    </span>
+                    <span v-if="item.up<=99" class="clearfix fl">
+                      <mt-button  type="default" size="small" class="fl" @click.native="addUp(1,index)">顶</mt-button><mt-badge class="fl" size="small" type="success">{{item.up}}</mt-badge>
+                    </span>
+                    <span v-if="item.down>99" class="clearfix fl">
+                      <mt-button  type="default" class="fl" size="small" @click.native="addUp(2,indx)">踩</mt-button><mt-badge size="small" class="fl" type="error">99+</mt-badge>
+                    </span>
+                    <span v-if="item.down<=99" class="clearfix fl">
+                      <mt-button  type="default"class="fl"  size="small" @click.native="addUp(2,index)">踩</mt-button><mt-badge size="small" class="fl" type="error">{{item.down}}</mt-badge>
+                    </span>
+                  </p>
+                </div>
+              </li>
             </ul>
           </mt-tab-container-item>
           <mt-tab-container-item id="3">
@@ -74,7 +144,7 @@
                   </div>
                 </div>
                 <div class="fl clearfix coupon_r">
-                  <mt-button type="default" size="small" :disabled="isDisabled" @click.native="getCoupon">{{couponStatus}}</mt-button>
+                  <mt-button type="default" size="small" :disabled="isDisabled1" @click.native="getCoupon(1)">{{couponStatus1}}</mt-button>
                 </div>
                 
               </li>
@@ -87,7 +157,7 @@
                   </div>
                 </div>
                 <div class="fl clearfix coupon_r">
-                  <mt-button type="default" size="small" :disabled="isDisabled" @click.native="getCoupon">{{couponStatus}}</mt-button>
+                  <mt-button type="default" size="small" :disabled="isDisabled2" @click.native="getCoupon(2)">{{couponStatus2}}</mt-button>
                 </div>
               </li>
             </ul>
@@ -155,7 +225,7 @@
                 <img src="../assets/closeBtn_icon.png" slot="icon" alt="" />
               </i>
             </h4>
-            <ul class="modal-body">
+            <ul class="modal-body selTypeBox">
               <li>
                 <mt-radio
                   title="颜色分类"
@@ -203,52 +273,29 @@
             <mt-button class="closeBtn" type="danger" @click="addCommodity">加入购物车</mt-button>
           </div>
           <div class="modal-content" v-if="popupType==4">
-            <h4 class="modal-header">基础保障</h4>
-            <ul class="modal-body">
+            <h4 class="modal-header infoHeader">基本信息</h4>
+            <ul class="modal-body infoBox">
               <li>
-                <h5><img slot="icon" src="../assets/icon.jpg" alt="" title="" class="smallIcon_24"/>正品保证</h5>
-                <p>商品支持正品保证服务</p>
-              </li>
-              <li>
-                <h5><img slot="icon" src="../assets/icon.jpg" alt="" title="" class="smallIcon_24"/>赠保价险</h5>
-                <p>活动结束后15天内若发生降价,可举证申请保险理赔.部分场景下不支持理赔(如双十一活动订单等),具体理赔范围详见天猫【帮助中心-聚划算保价险服务】</p>
-              </li>
-              <li>
-                <h5><img slot="icon" src="../assets/icon.jpg" alt="" title="" class="smallIcon_24"/>赠保价险</h5>
-                <p>活动结束后15天内若发生降价,可举证申请保险理赔.部分场景下不支持理赔(如双十一活动订单等),具体理赔范围详见天猫【帮助中心-聚划算保价险服务】</p>
-              </li>
-              <li>
-                <h5><img slot="icon" src="../assets/icon.jpg" alt="" title="" class="smallIcon_24"/>赠保价险</h5>
-                <p>活动结束后15天内若发生降价,可举证申请保险理赔.部分场景下不支持理赔(如双十一活动订单等),具体理赔范围详见天猫【帮助中心-聚划算保价险服务】</p>
-              </li>
-              <li>
-                <h5><img slot="icon" src="../assets/icon.jpg" alt="" title="" class="smallIcon_24"/>赠保价险</h5>
-                <p>活动结束后15天内若发生降价,可举证申请保险理赔.部分场景下不支持理赔(如双十一活动订单等),具体理赔范围详见天猫【帮助中心-聚划算保价险服务】</p>
-              </li>
-              <li>
-                <h5><img slot="icon" src="../assets/icon.jpg" alt="" title="" class="smallIcon_24"/>赠保价险</h5>
-                <p>活动结束后15天内若发生降价,可举证申请保险理赔.部分场景下不支持理赔(如双十一活动订单等),具体理赔范围详见天猫【帮助中心-聚划算保价险服务】</p>
-              </li>
-              <li>
-                <h5><img slot="icon" src="../assets/icon.jpg" alt="" title="" class="smallIcon_24"/>赠保价险</h5>
-                <p>活动结束后15天内若发生降价,可举证申请保险理赔.部分场景下不支持理赔(如双十一活动订单等),具体理赔范围详见天猫【帮助中心-聚划算保价险服务】</p>
-              </li>
-              <li>
-                <h5><img slot="icon" src="../assets/icon.jpg" alt="" title="" class="smallIcon_24"/>赠保价险</h5>
-                <p>活动结束后15天内若发生降价,可举证申请保险理赔.部分场景下不支持理赔(如双十一活动订单等),具体理赔范围详见天猫【帮助中心-聚划算保价险服务】</p>
-              </li>
-              <li>
-                <h5><img slot="icon" src="../assets/icon.jpg" alt="" title="" class="smallIcon_24"/>赠保价险</h5>
-                <p>活动结束后15天内若发生降价,可举证申请保险理赔.部分场景下不支持理赔(如双十一活动订单等),具体理赔范围详见天猫【帮助中心-聚划算保价险服务】</p>
+                <h5>主体参数</h5>
+                <p>
+                  <mt-cell title="产品品牌">小米（MI）</mt-cell>
+                  <mt-cell title="认证型号">L55M5-AD</mt-cell>
+                  <mt-cell title="产品型号">L55M5-AD</mt-cell>
+                  <mt-cell title="产品颜色">亚光黑</mt-cell>
+                  <mt-cell title="产品类型">4K超清电视；人工智能电视</mt-cell>
+                  <mt-cell title="推荐观看距离(米)">2.5m-3m（46-55英寸）</mt-cell>
+                  <mt-cell title="上市日期">2017.3</mt-cell>
+                  <mt-cell title="能效等级">3级</mt-cell>
+                </p>
               </li>
             </ul>
             <mt-button class="closeBtn" type="danger" @click="popupShow=false">确定</mt-button>
           </div>
           <div class="modal-content" v-if="popupType==5">
-            <h4 class="modal-header">基础保障</h4>
+            <h4 class="modal-header">送至</h4>
             <ul class="modal-body">
               <li class="adress">
-                <mt-picker :slots="slots" @change="selAdress" value-key="name"></mt-picker>
+                <!-- <mt-picker :slots="slots" @change="selAdress" value-key="name"></mt-picker> -->
               </li>
             </ul>
             <mt-button class="closeBtn" type="danger" @click="popupShow=false">确定</mt-button>
@@ -273,6 +320,98 @@ export default {
         'commodityTit':'小米手机小米手机小米手机小米手机小米手机小米手机小米手机小米手机小米手机小米手机小米手机小米手机小米手机小米手机小米手机小米手机小米手机小米手机小米手机小米手机小米手机小米手机',
         'favorable':1
       },
+      evaluation:[
+        {
+          'id':1,
+          'up':1111,
+          'down':1,
+          'content':'评价内容评价内容评价内容评价内容评价内容评价内容评价内容评价内容评价内容评价内容评价内容评价内容评价内容评价内容评价内容评价内容评价内容',
+          'time':Date.now(),
+          'rateCount':5,
+          'userName':'用户名用户名用户名'
+        },
+        {
+          'id':2,
+          'up':1222,
+          'down':1,
+          'content':'评价内容1299993',
+          'time':Date.now(),
+          'rateCount':3,
+          'userName':'用户名'
+        },
+        {
+          'id':3,
+          'up':1,
+          'down':1,
+          'content':'评价内容1888823',
+          'time':Date.now(),
+          'rateCount':5,
+          'userName':'用户名'
+        },
+        {
+          'id':4,
+          'up':1,
+          'down':13333,
+          'content':'评价内容1777723',
+          'time':Date.now(),
+          'rateCount':5,
+          'userName':'用户名'
+        },
+        {
+          'id':5,
+          'up':133,
+          'down':1,
+          'content':'评价内容1666623',
+          'time':Date.now(),
+          'rateCount':5,
+          'userName':'用户名'
+        },
+        {
+          'id':6,
+          'up':1,
+          'down':1,
+          'content':'评价内容1555523',
+          'time':Date.now(),
+          'rateCount':5,
+          'userName':'用户名'
+        },
+        {
+          'id':7,
+          'up':1,
+          'down':1,
+          'content':'评价内容1444423',
+          'time':Date.now(),
+          'rateCount':5,
+          'userName':'用户名'
+        },
+        {
+          'id':8,
+          'up':1,
+          'down':1,
+          'content':'评价内容1233333',
+          'time':Date.now(),
+          'rateCount':5,
+          'userName':'用户名'
+        },
+        {
+          'id':9,
+          'up':1,
+          'down':1,
+          'content':'评价内容1222223',
+          'time':Date.now(),
+          'rateCount':5,
+          'userName':'用户名'
+        },
+        {
+          'id':10,
+          'up':1,
+          'down':1,
+          'content':'评价内容1111123',
+          'time':Date.now(),
+          'rateCount':5,
+          'userName':'用户名'
+        }
+      ],
       commodityTit:'',
       price:'',
       personNumber:'',
@@ -290,49 +429,55 @@ export default {
       selCount:1,
       commodityId:'',
       url:'./src/assets/a.txt',
-      isDisabled:false,
-      couponStatus:'未领取',
-      slots: [
+      isDisabled1:false,
+      isDisabled2:false,
+      couponStatus1:'立即领取',
+      couponStatus2:'立即领取',
+      rateText:['差评','失望','一般','满意','惊喜'],
+      rateCount1:5,
+      rateCount2:5,
+      rateCount3:5,
+      /* slots: [
         {
-          flex: 1,
-          values: this.getProvinceArr(),  //省,
-          className: 'province',
-          textAlign: 'left'
+          'flex': 1,
+          'values': this.getProvinceArr(),  //省,
+          'className': 'province',
+          'textAlign': 'left'
         }, 
         {
-          divider: true,
-          content: '-',
-          className: 'divider'
+          'divider': true,
+          'content': '-',
+          'className': 'divider'
         }, 
         {
-          flex: 1,
-          values: this.getCityArr('北京'),
-          className: 'city',
-          textAlign: 'left'
+          'flex': 1,
+          'values': this.getCityArr('北京'),
+          'className': 'city',
+          'textAlign': 'left'
         }, 
         {
-          divider: true,
-          content: '-',
-          className: 'divider'
+          'divider': true,
+          'content': '-',
+          'className': 'divider'
         }, 
         {
-          flex: 1,
-          values: this.getDistrictArr('北京','北京市'),
-          className: 'district',
-          textAlign: 'left'
+          'flex': 1,
+          'values': this.getDistrictArr('北京','北京市'),
+          'className': 'district',
+          'textAlign': 'left'
         }, 
         {
-          divider: true,
-          content: '-',
-          className: 'divider'
+          'divider': true,
+         'content': '-',
+          'className': 'divider'
         }, 
         {
-          flex: 1,
-          values: this.getStreetArr('北京','北京','大兴区'),
-          className: 'street',
-          textAlign: 'left'
+          'flex': 1,
+          'values': this.getStreetArr('北京','北京','大兴区'),
+          'className': 'street',
+          'textAlign': 'left'
         }
-      ],
+      ], */
       adress:'北京大兴',
       regionInit:false,
       threeLevelAddress:[
@@ -583,7 +728,6 @@ export default {
     this.personNumber=this.list.personNumber;
     this.favorablePrice=this.list.favorablePrice;
     this.commodityId=this.list.id;
-    console.log(this.threeLevelAddress);
   },
   methods:{
     handleChange(index){
@@ -636,11 +780,18 @@ export default {
       }
       
     },
-    getCoupon(){
-      if(this.isDisabled!=true){
-        this.couponStatus='已领取';
-        this.isDisabled=true;
+    getCoupon(id){
+      if(this.isDisabled1!=true&&id==1){
+        this.couponStatus1='已领取';
+        this.isDisabled1=true;
+      }else if(this.isDisabled2!=true&&id==2){
+        this.couponStatus2='已领取';
+        this.isDisabled2=true;
       }else{
+        this.popupShow=false;
+        Toast({
+          message:'已经领取过，请不要重复领取！'
+        });
         return;
       }
       
@@ -738,7 +889,61 @@ export default {
       });
       // console.log(countyArr);
       return streetArr;
+    },
+    addUp(addType,index){
+      //localStorage.clear();
+      if(localStorage.getItem(this.evaluation[index].id)){
+        if((JSON.parse(localStorage.getItem(this.evaluation[index].id)).up)<(this.evaluation[index].up)&&addType==1){
+          Toast({
+              message: '已经赞过，请不要重复提交!'
+          });
+          return;
+        }
+        else if((JSON.parse(localStorage.getItem(this.evaluation[index].id)).down)<(this.evaluation[index].down)&&addType==2){
+          Toast({
+              message: '已经踩过，请不要重复提交!'
+          });
+          return;
+        }else{
+          if(addType==1){
+            let oldCount=this.evaluation[index].up;
+            this.evaluation[index].up=oldCount+1;
+            console.log(localStorage.getItem(this.evaluation[index].id));
+          }
+          else if(addType==2){
+            let oldCount=this.evaluation[index].down;
+            this.evaluation[index].down=oldCount+1;
+            console.log(localStorage.getItem(this.evaluation[index].id));
+          }
+        }
+      }else{
+        let obj={};
+        obj.up=this.evaluation[index].up;
+        obj.down=this.evaluation[index].down;
+        localStorage.setItem(this.evaluation[index].id,JSON.stringify(obj));
+        if(addType==1){
+          let oldCount=this.evaluation[index].up;
+          this.evaluation[index].up=oldCount+1;
+        }
+        else if(addType==2){
+          let oldCount=this.evaluation[index].down;
+          this.evaluation[index].down=oldCount+1;
+        }
+      }
+      
     }
+  },
+  filters:{
+    'getNowTime'(input){
+        let oDate=new Date(input);
+        const MM=(oDate.getMonth()+1)<10? '0'+(oDate.getMonth()+1):(oDate.getMonth()+1);
+        const DD=oDate.getDate()<10?'0'+oDate.getDate():oDate.getDate();
+        const hh=oDate.getHours()<10?'0'+oDate.getHours():oDate.getHours();
+        const mm=oDate.getMinutes()<10?'0'+oDate.getMinutes():oDate.getMinutes();
+        const ss=oDate.getSeconds()<10?'0'+oDate.getSeconds():oDate.getSeconds();
+        return oDate.getFullYear()+'-'+MM+'-'+DD+' '+hh+':'+mm+':'+ss;
+    }
+
   }
 }
 </script>
@@ -773,6 +978,20 @@ ul,li{
   text-indent: 2em;
   line-height: 1.25rem;
   font-size: .875rem;
+}
+.rateBox{
+  margin-bottom:.625rem;
+}
+.commodityListTab .mint-tab-container-item .rateBox .el-rate{
+  margin-top:.25rem;
+}
+.commodityListTab .mint-tab-container-item .rateBox p{
+  text-indent:0;
+  margin: 0 .625rem;
+  line-height:1.875rem;
+}
+.selTypeBox .mint-radiolist-label{
+  font-size:.75rem;
 }
 .imgList{
   height: 12.5rem;
@@ -904,6 +1123,9 @@ ul,li{
   background-color: #fdf1e3;
   border-radius: .125rem;
 }
+.modal-body .coupon .coupon_l{
+  width:13.125rem;
+}
 .modal-body .coupon .coupon_r{
   background-color: #ff6501;
   height:4.125rem;
@@ -912,6 +1134,13 @@ ul,li{
   display: -webkit-flex;
   display: flex;
   align-items: center;
+  width:3.75rem;
+  justify-content:center;
+}
+.coupon_r .mint-button--small{
+  font-size:.75rem;
+  padding:0 .375rem;
+  width:3.75rem;
 }
 .adress .picker-slot{
   font-size: .75rem;
@@ -953,6 +1182,83 @@ ul,li{
 .modal-body p{
   color: #999;
   padding-left: 2.5rem;
+}
+.modal-dialog .modal-header.infoHeader{
+  margin-bottom:0;
+  padding-bottom:0;
+}
+.infoBox h5{
+  font-size:.75rem;
+}
+.infoBox p{
+  padding-left:0;
+  font-size:.75rem;
+}
+.infoBox .mint-cell-wrapper{
+  font-size:.75rem;
+}
+.evaluationList li{
+  line-height:1.625rem;
+}
+.evaluationList li h5{
+  margin:0 0 .375rem 0; 
+  max-height:6.5em;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  position:relative;
+}
+.evaluationList li h5::after{
+  position:absolute;
+  content:'...';
+  right:0;
+  bottom:0;
+  padding-left:40px;
+}
+.evaluationList p{
+  margin:0;
+}
+.commodityListTab .evaluationList .mint-badge{
+  text-indent:0;
+  width:1.875rem;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.evaluationInfo{
+  display:-webkit-flex;
+  display:flex;
+  align-items: center;
+}
+.commodityListTab .evaluationList li{
+  padding-bottom:.625rem;
+  margin-bottom:.625rem;
+  border-bottom:1px solid #ccc;
+}
+.commodityListTab .evaluationList li:last-child{
+  border-bottom:none;
+}
+.userInfo{
+  flex:1 1 5rem;
+  text-align:center;
+}
+.commodityListTab .userInfo img{
+  width:3.125rem;
+  height:3.125rem;
+  background-color:#fff;
+  padding:.125rem;
+  border-radius:.25rem;
+  border:1px solid #000;
+}
+.commodityListTab .userInfo p{
+  text-indent:0;
+}
+.userEvaluation{
+  flex:2 2 13.75rem;
+  margin-left:.625rem;
+}
+.evaluationCount>span>button{
+  height:1.5rem;
+  margin:0 .375rem;
 }
 .closeBtn {
   width:100%;

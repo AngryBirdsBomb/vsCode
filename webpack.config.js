@@ -30,6 +30,10 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/
       },
+      { 
+        test: /\.(svg|eot|woff|woff2|ttf)$/,
+        loader: 'file-loader'
+      },
       {
         test: /\.(png|jpg|gif|svg|jpeg)$/,
         loader: 'file-loader',
