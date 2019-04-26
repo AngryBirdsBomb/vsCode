@@ -37,6 +37,7 @@ export default {
   height:12.5rem;
   border-bottom: .0625rem solid #000;
   margin-bottom: 1.25rem;
+  margin:.5rem;
 }
 .mint-swipe-item img{
   width:100%;

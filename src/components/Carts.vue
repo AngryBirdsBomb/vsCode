@@ -187,6 +187,9 @@ export default {
 }
 </script>
 <style lang="" >
+.carts{
+  margin:.5rem;
+}
 .carts .mint-search{
   height:auto;
 }
@@ -208,6 +211,16 @@ export default {
 .cartsListItem{
   text-align: left;
   line-height: 1.625rem;
+}
+.cartsListItem .mint-cell{
+  background:none;
+}
+.cartsListItem:last-child{
+  background-image: -webkit-linear-gradient(bottom, #d9d9d9, #d9d9d9 50%, transparent 50%);
+  background-image: linear-gradient(0deg, #d9d9d9, #d9d9d9 50%, transparent 50%);
+  background-size: 100% 1px;
+  background-repeat: no-repeat;
+  background-position: bottom;
 }
 .cartsListItem>p{
   text-align: center;

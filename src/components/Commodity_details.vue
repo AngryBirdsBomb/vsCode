@@ -953,6 +953,9 @@ ul,li{
   padding:0;
   list-style: none;
 }
+.commodity_details{
+  margin:.5rem;
+}
 .commodityListTab{
   background-color: #fdfdfd;
   overflow-y:auto; 

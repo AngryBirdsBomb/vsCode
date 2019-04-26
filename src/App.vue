@@ -21,6 +21,10 @@ export default {
 </script>
 
 <style>
+body{
+  margin:0;
+  padding:0;
+}
 /* 底部按钮样式 */
 .mint-tab-item-label>a{
   display: block;
