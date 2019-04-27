@@ -63,6 +63,9 @@ export default {
           el.target.style.backgroundColor='#ffc107';
         }
       }
+      else{
+          this.checkStatus.email=false;
+      }
     },
     checkPassword(el){
       if(this.password!=''){
@@ -74,6 +77,9 @@ export default {
           this.checkStatus.password=false;
           el.target.style.backgroundColor='#ffc107';
         }
+      }
+      else{
+          this.checkStatus.password=false;
       }
     },
     checkUsername(el){
@@ -87,6 +93,9 @@ export default {
           el.target.style.backgroundColor='#ffc107';
         }
       }
+      else{
+          this.checkStatus.username=false;
+      }
       //console.log('=>'+this.checkStatus.username);
     },
     checkPhone(el){
@@ -99,6 +108,9 @@ export default {
           this.checkStatus.phone=false;
           el.target.style.backgroundColor='#ffc107';
         }
+      }
+      else{
+          this.checkStatus.phone=false;
       }
     },
     checkRegisterInfo(){

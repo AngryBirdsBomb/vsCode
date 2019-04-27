@@ -13,10 +13,10 @@
           <i class="el-icon-setting"></i>
         </div>
         <div class="registerUserInfo">
-          <mt-field label="用户名" placeholder="字母，数字，下划线，减号" v-model="username" :state="usernameStatus" @blur.native.capture="checkUsername"></mt-field>
-          <mt-field label="邮箱" placeholder="请输入邮箱" type="email" v-model="email" :state="emailStatus" @blur.native.capture="checkEmail"></mt-field>
-          <mt-field label="密码" placeholder="包含大小写字母、特殊符号，数字" type="password" v-model="password" :state="passwordStatus" @blur.native.capture="checkPassword"></mt-field>
-          <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="phone" :state="phone" @blur.native.capture="checkPhone"></mt-field>
+          <mt-field label="用户名" placeholder="字母，数字，下划线，减号" v-model="username" state="" @blur.native.capture="checkUsername"></mt-field>
+          <mt-field label="邮箱" placeholder="请输入邮箱" type="email" v-model="email" state="" @blur.native.capture="checkEmail"></mt-field>
+          <mt-field label="密码" placeholder="包含大小写字母、特殊符号，数字" type="password" v-model="password" state="" @blur.native.capture="checkPassword"></mt-field>
+          <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="phone" state="" @blur.native.capture="checkPhone"></mt-field>
           <mt-field label="生日" placeholder="请输入生日" type="date" v-model="birthday"></mt-field>
           <mt-field label="自我介绍" placeholder="自我介绍" type="textarea" rows="2" v-model="introduction"></mt-field>
           <mt-field label="验证码" v-model="captcha">
@@ -46,7 +46,12 @@ export default {
       birthday:'',
       introduction:'',
       captcha:'',
-      checkStatus:{}
+      checkStatus:{
+        'phone':false,
+        'password':false,
+        'username':false,
+        'email':false
+      }
 
     };
   },
@@ -62,6 +67,9 @@ export default {
           el.target.style.backgroundColor='#ffc107';
         }
       }
+      else{
+          this.checkStatus.email=false;
+      }
     },
     checkPassword(el){
       if(this.password!=''){
@@ -73,6 +81,9 @@ export default {
           this.checkStatus.password=false;
           el.target.style.backgroundColor='#ffc107';
         }
+      }
+      else{
+          this.checkStatus.password=false;
       }
     },
     checkUsername(el){
@@ -86,6 +97,9 @@ export default {
           el.target.style.backgroundColor='#ffc107';
         }
       }
+      else{
+          this.checkStatus.username=false;
+      }
       //console.log('=>'+this.checkStatus.username);
     },
     checkPhone(el){
@@ -98,6 +112,9 @@ export default {
           this.checkStatus.phone=false;
           el.target.style.backgroundColor='#ffc107';
         }
+      }
+      else{
+          this.checkStatus.phone=false;
       }
     },
     checkRegisterInfo(){
