@@ -12,27 +12,29 @@
       </mt-search>
       <div class="cartsListBox">
         <ul class="cartsList">
-          <li class="cartsListItem" v-for="(item,index) in searchResult" :key="index">
-            <p v-if="lists.length<=0">购物车已空!</p>
-            <mt-cell-swipe v-if="searchResult.length>0"
-            :title="item.commodityTit"
-            :right="[
-              {
-                content: '删除',
-                style: { background: 'red', color: '#fff' },
-                handler: () => delItem(item.id)
-              }
-            ]"
-            :label="'商品ID:'+item.id"
-            is-link 
-          >
-            <div class="selCommodityCountBox">
-              <mt-button type="default" size="small" @click.native="changeCommodityCount('down',index)">-</mt-button>
-              <input type="number" v-model="item.count" min="1">
-              <mt-button type="default" size="small" @click.native="changeCommodityCount('up',index)">+</mt-button>
-            </div>
-          </mt-cell-swipe>
-          </li>
+          <transition-group enter-active-class="animated bounceInLeft" leave-active-class="animated bounceOutRight">
+            <li class="cartsListItem" v-for="(item,index) in searchResult" :key="item.id">
+              <p v-if="lists.length<=0">购物车已空!</p>
+              <mt-cell-swipe v-if="searchResult.length>0"
+              :title="item.commodityTit"
+              :right="[
+                {
+                  content: '删除',
+                  style: { background: 'red', color: '#fff' },
+                  handler: () => delItem(item.id)
+                }
+              ]"
+              :label="'商品ID:'+item.id"
+              is-link 
+            >
+              <div class="selCommodityCountBox">
+                <mt-button type="default" size="small" @click.native="changeCommodityCount('down',index)">-</mt-button>
+                <input type="number" v-model="item.count" min="1">
+                <mt-button type="default" size="small" @click.native="changeCommodityCount('up',index)">+</mt-button>
+              </div>
+            </mt-cell-swipe>
+            </li>
+          </transition-group>
         </ul>
       </div>
     </div>

@@ -1,10 +1,10 @@
 <template>
-    <div id="home">
+    <div id="home" class="home">
       <mt-header title="首页" fixed>
         <mt-button  slot="left" @click="handleClose">关闭</mt-button>
         <!-- <mt-button icon="more" slot="right"></mt-button> -->
       </mt-header>
-      <mt-swipe :auto="4000">
+      <mt-swipe :auto="4000" class="headerTab">
         <mt-swipe-item><img src="../assets/1.jpeg" alt="" /></mt-swipe-item>
         <mt-swipe-item><img src="../assets/2.jpeg" alt="" /></mt-swipe-item>
         <mt-swipe-item><img src="../assets/3.jpeg" alt="" /></mt-swipe-item>
@@ -33,11 +33,13 @@ export default {
 }
 </script>
 <style lang="" scoped>
-#home{
-  height:12.5rem;
+.home{
+  /* height:29rem; */
   border-bottom: .0625rem solid #000;
-  margin-bottom: 1.25rem;
   margin:.5rem;
+}
+.home .headerTab{
+  height: 12.5rem;
 }
 .mint-swipe-item img{
   width:100%;

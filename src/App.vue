@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <div class=""><router-view></router-view></div>
+    <div class="animateBox">
+      <router-view></router-view>
+    </div>
     <mt-tabbar fixed>
       <mt-tab-item id="主页"><router-link to="/home"><i class="homeIcon"></i><span>主页</span></router-link></mt-tab-item>
       <mt-tab-item id="购物车"><router-link to="/carts"><i class="cartsIcon"></i><span>购物车</span></router-link></mt-tab-item>

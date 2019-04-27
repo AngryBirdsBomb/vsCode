@@ -11,7 +11,7 @@ const router=new VueRouter(Routes);
 Vue.use(Mint);
 Vue.use(Rate);
 Vue.use(VueRouter);
-
+import '../node_modules/animate.css/animate.css'
 new Vue({
   el: '#app',
   render: h => h(App),

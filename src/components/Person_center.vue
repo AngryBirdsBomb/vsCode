@@ -111,7 +111,7 @@ export default {
 </script>
 <style lang="" >
 .personCenterListBox{
-  margin-bottom: 3.75rem;
+  margin-bottom: 3.125rem;
   position:relative;
 }
 .userOptionBox{
@@ -153,7 +153,8 @@ export default {
   line-height: 1.875rem;
 }
 .userName p{
-  margin:0;
+  width: 5rem;
+  margin: 0 auto;
 }
 .userOtherInfo{
   display:-webkit-flex;

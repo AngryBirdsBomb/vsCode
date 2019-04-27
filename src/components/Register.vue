@@ -24,7 +24,7 @@
           </mt-field>
           <div class="submitBox">
             <mt-button type="primary" size="small" @click.native="checkRegisterInfo">确认注册</mt-button>
-            <mt-button type="danger" size="small">清除</mt-button>
+            <mt-button type="danger" size="small" @click.native="clearInput">清除</mt-button>
           </div>
           <div class="helpBox ">
             <router-link to="/login" class="fr">登录</router-link>
@@ -64,11 +64,12 @@ export default {
           el.target.style.backgroundColor='#fff';
         }else{
           this.checkStatus.email=false;
-          el.target.style.backgroundColor='#ffc107';
+          el.target.style.backgroundColor='rgba(239, 79, 79, 0.4)';
         }
       }
       else{
           this.checkStatus.email=false;
+          el.target.style.backgroundColor='rgba(239, 79, 79, 0.4)';
       }
     },
     checkPassword(el){
@@ -79,11 +80,12 @@ export default {
           el.target.style.backgroundColor='#fff';
         }else{
           this.checkStatus.password=false;
-          el.target.style.backgroundColor='#ffc107';
+          el.target.style.backgroundColor='rgba(239, 79, 79, 0.4)';
         }
       }
       else{
           this.checkStatus.password=false;
+          el.target.style.backgroundColor='rgba(239, 79, 79, 0.4)';
       }
     },
     checkUsername(el){
@@ -94,11 +96,12 @@ export default {
           el.target.style.backgroundColor='#fff';
         }else{
           this.checkStatus.username=false;
-          el.target.style.backgroundColor='#ffc107';
+          el.target.style.backgroundColor='rgba(239, 79, 79, 0.4)';
         }
       }
       else{
           this.checkStatus.username=false;
+          el.target.style.backgroundColor='rgba(239, 79, 79, 0.4)';
       }
       //console.log('=>'+this.checkStatus.username);
     },
@@ -110,33 +113,39 @@ export default {
           el.target.style.backgroundColor='#fff';
         }else{
           this.checkStatus.phone=false;
-          el.target.style.backgroundColor='#ffc107';
+          el.target.style.backgroundColor='rgba(239, 79, 79, 0.4)';
         }
       }
       else{
           this.checkStatus.phone=false;
+          el.target.style.backgroundColor='rgba(239, 79, 79, 0.4)';
       }
     },
     checkRegisterInfo(){
-      //console.log(this.checkStatus);
+      console.log(this.checkStatus);
       const arr=[];
       for(let key in this.checkStatus){
-        console.log(this.checkStatus);
-        console.log(this.checkStatus[key]);
+        //console.log(this.checkStatus[key]);
         if(this.checkStatus[key]==false){
           arr.push(key);
         }
       }
       if(arr.length<=0){
-        console.log(arr);
         Toast({
           message:'提交成功!'
         });
+        this.clearInput();
       }else{
         Toast({
           message:arr.join(',')+'格式不符合要求,请修改!'
         });
       }
+    },
+    clearInput(){
+      this.username='';
+      this.email='';
+      this.password='';
+      this.phone='';
     }
   },
   computed: {
@@ -233,7 +242,8 @@ export default {
   line-height: 1.875rem;
 }
 .userName p{
-  margin:0;
+  width: 5rem;
+  margin: 0 auto;
 }
 .userOtherInfo{
   display:-webkit-flex;
