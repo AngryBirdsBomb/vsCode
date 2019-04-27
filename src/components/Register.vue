@@ -51,67 +51,75 @@ export default {
     };
   },
   methods:{
-    checkEmail(){
+    checkEmail(el){
       if(this.email!=''){
         const isOk=/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/.test(this.email);
         if(isOk){
           this.checkStatus.email=true;
+          el.target.style.backgroundColor='#fff';
         }else{
           this.checkStatus.email=false;
+          el.target.style.backgroundColor='#ffc107';
         }
       }
     },
-    checkPassword(){
+    checkPassword(el){
       if(this.password!=''){
         const isOk=/^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/.test(this.password);
         if(isOk){
           this.checkStatus.password=true;
+          el.target.style.backgroundColor='#fff';
         }else{
           this.checkStatus.password=false;
+          el.target.style.backgroundColor='#ffc107';
         }
       }
     },
-    checkUsername(){
+    checkUsername(el){
       if(this.username!=''){
         const isOk=/^[a-zA-Z0-9_-]{6,16}$/.test(this.username);
         if(isOk){
           this.checkStatus.username=true;
+          el.target.style.backgroundColor='#fff';
         }else{
           this.checkStatus.username=false;
+          el.target.style.backgroundColor='#ffc107';
         }
       }
+      //console.log('=>'+this.checkStatus.username);
     },
-    checkPhone(){
+    checkPhone(el){
       if(this.phone!=''){
         const isOk=/^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/.test(this.phone);
         if(isOk){
           this.checkStatus.phone=true;
+          el.target.style.backgroundColor='#fff';
         }else{
           this.checkStatus.phone=false;
+          el.target.style.backgroundColor='#ffc107';
         }
       }
     },
     checkRegisterInfo(){
-      if(this.checkStatus){
-        for(let key in this.checkStatus){
-          console.log(this.checkStatus.key);
-          if(this.checkStatus.key==false){
-            Toast({
-              message:'格式不符合要求,请修改!'
-            });
-            return;
-          }else{
-            Toast({
-              message:'提交成功!'
-            });
-          }
+      //console.log(this.checkStatus);
+      const arr=[];
+      for(let key in this.checkStatus){
+        console.log(this.checkStatus);
+        console.log(this.checkStatus[key]);
+        if(this.checkStatus[key]==false){
+          arr.push(key);
         }
+      }
+      if(arr.length<=0){
+        console.log(arr);
+        Toast({
+          message:'提交成功!'
+        });
       }else{
         Toast({
-          message:'格式不符合要求,请修改!'
+          message:arr.join(',')+'格式不符合要求,请修改!'
         });
       }
-      
     }
   },
   computed: {

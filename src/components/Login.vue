@@ -13,10 +13,10 @@
           <i class="el-icon-setting"></i>
         </div>
         <div class="registerUserInfo">
-          <mt-field label="用户名" placeholder="字母，数字，下划线，减号" v-model="username" :state="usernameStatus" @blur.native.capture="checkUsername"></mt-field>
-          <mt-field label="邮箱" placeholder="请输入邮箱" type="email" v-model="email" :state="emailStatus" @blur.native.capture="checkEmail"></mt-field>
-          <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="phone" :state="phoneStatus" @blur.native.capture="checkPhone"></mt-field>
-          <mt-field label="密码" placeholder="包含大小写字母、特殊符号，数字" type="password" v-model="password" :state="passwordStatus" @blur.native.capture="checkPassword"></mt-field>
+          <mt-field label="用户名" placeholder="字母，数字，下划线，减号" v-model="username" state="" @blur.native.capture="checkUsername($event)"></mt-field>
+          <mt-field label="邮箱" placeholder="请输入邮箱" type="email" v-model="email" state="" @blur.native.capture="checkEmail($event)"></mt-field>
+          <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="phone" state="" @blur.native.capture="checkPhone($event)"></mt-field>
+          <mt-field label="密码" placeholder="包含大小写字母、特殊符号，数字" type="password" v-model="password" state="" @blur.native.capture="checkPassword($event)"></mt-field>
           <mt-field label="验证码" v-model="captcha">
             <img src="../assets/logo.png" height="45px" width="100px">
           </mt-field>
@@ -33,6 +33,7 @@
     </div>
 </template>
 <script type="text/javascript">
+import {Toast} from 'mint-ui'
 export default {
   name: "login",
   data () {
@@ -42,64 +43,83 @@ export default {
       email:'',
       phone:'',
       captcha:'',
-      checkStatus:{}
+      checkStatus:{
+        'phone':false,
+        'password':false,
+        'username':false,
+        'email':false
+      }
     };
   },
   methods:{
-    checkEmail(){
+    checkEmail(el){
       if(this.email!=''){
         const isOk=/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/.test(this.email);
         if(isOk){
           this.checkStatus.email=true;
+          el.target.style.backgroundColor='#fff';
         }else{
           this.checkStatus.email=false;
+          el.target.style.backgroundColor='#ffc107';
         }
       }
     },
-    checkPassword(){
+    checkPassword(el){
       if(this.password!=''){
         const isOk=/^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/.test(this.password);
         if(isOk){
           this.checkStatus.password=true;
+          el.target.style.backgroundColor='#fff';
         }else{
           this.checkStatus.password=false;
+          el.target.style.backgroundColor='#ffc107';
         }
       }
     },
-    checkUsername(){
+    checkUsername(el){
       if(this.username!=''){
         const isOk=/^[a-zA-Z0-9_-]{6,16}$/.test(this.username);
         if(isOk){
           this.checkStatus.username=true;
+          el.target.style.backgroundColor='#fff';
         }else{
           this.checkStatus.username=false;
+          el.target.style.backgroundColor='#ffc107';
         }
       }
-      console.log('=>'+this.checkStatus.username);
+      //console.log('=>'+this.checkStatus.username);
     },
-    checkPhone(){
+    checkPhone(el){
       if(this.phone!=''){
         const isOk=/^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/.test(this.phone);
         if(isOk){
           this.checkStatus.phone=true;
+          el.target.style.backgroundColor='#fff';
         }else{
           this.checkStatus.phone=false;
+          el.target.style.backgroundColor='#ffc107';
         }
       }
     },
     checkRegisterInfo(){
       //console.log(this.checkStatus);
+      const arr=[];
       for(let key in this.checkStatus){
-        if(this.checkStatus.key==false){
-          Toast({
-            message:'格式不符合要求,请修改!'
-          });
-          return;
-        }else{
-          Toast({
-            message:'提交成功!'
-          });
+        console.log(this.checkStatus);
+        console.log(this.checkStatus[key]);
+        if(this.checkStatus[key]==false){
+          arr.push(key);
         }
+      }
+      if(arr.length<=0){
+        console.log(arr);
+        Toast({
+          message:'提交成功!'
+        });
+      }else{
+        Toast({
+          message:arr.join(',')+'格式不符合要求,请修改!'
+        });
       }
     }
   },
