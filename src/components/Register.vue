@@ -13,17 +13,17 @@
           <i class="el-icon-setting"></i>
         </div>
         <div class="registerUserInfo">
-          <mt-field label="用户名" placeholder="字母，数字，下划线，减号" v-model="username" :state="checkStatus.username?'success':'error'" @blur.native.capture="checkUsername"></mt-field>
-          <mt-field label="邮箱" placeholder="请输入邮箱" type="email" v-model="email" :state="checkStatus.email?'success':'error'" @blur.native.capture="checkEmail"></mt-field>
-          <mt-field label="密码" placeholder="包含大小写字母、特殊符号，数字" type="password" v-model="password" :state="checkStatus.password?'success':'error'" @blur.native.capture="checkPassword"></mt-field>
-          <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="phone" :state="checkStatus.phone?'success':'error'" @blur.native.capture="checkPhone"></mt-field>
+          <mt-field label="用户名" placeholder="字母，数字，下划线，减号" v-model="username" :state="usernameStatus" @blur.native.capture="checkUsername"></mt-field>
+          <mt-field label="邮箱" placeholder="请输入邮箱" type="email" v-model="email" :state="emailStatus" @blur.native.capture="checkEmail"></mt-field>
+          <mt-field label="密码" placeholder="包含大小写字母、特殊符号，数字" type="password" v-model="password" :state="passwordStatus" @blur.native.capture="checkPassword"></mt-field>
+          <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="phone" :state="phone" @blur.native.capture="checkPhone"></mt-field>
           <mt-field label="生日" placeholder="请输入生日" type="date" v-model="birthday"></mt-field>
           <mt-field label="自我介绍" placeholder="自我介绍" type="textarea" rows="2" v-model="introduction"></mt-field>
           <mt-field label="验证码" v-model="captcha">
             <img src="../assets/logo.png" height="45px" width="100px">
           </mt-field>
           <div class="submitBox">
-            <mt-button type="primary" size="small" @click="checkRegisterInfo">确认注册</mt-button>
+            <mt-button type="primary" size="small" @click.native="checkRegisterInfo">确认注册</mt-button>
             <mt-button type="danger" size="small">清除</mt-button>
           </div>
           <div class="helpBox ">
@@ -34,6 +34,7 @@
     </div>
 </template>
 <script type="text/javascript">
+import {Toast} from 'mint-ui'
 export default {
   name: "register",
   data () {
@@ -45,7 +46,7 @@ export default {
       birthday:'',
       introduction:'',
       captcha:'',
-      checkStatus:[]
+      checkStatus:{}
 
     };
   },
@@ -54,9 +55,9 @@ export default {
       if(this.email!=''){
         const isOk=/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/.test(this.email);
         if(isOk){
-          this.checkStatus.push({'email':true});
+          this.checkStatus.email=true;
         }else{
-          this.checkStatus.push({'email':false});
+          this.checkStatus.email=false;
         }
       }
     },
@@ -64,9 +65,9 @@ export default {
       if(this.password!=''){
         const isOk=/^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/.test(this.password);
         if(isOk){
-          this.checkStatus.push({'email':true});
+          this.checkStatus.password=true;
         }else{
-          this.checkStatus.push({'email':false});
+          this.checkStatus.password=false;
         }
       }
     },
@@ -74,9 +75,9 @@ export default {
       if(this.username!=''){
         const isOk=/^[a-zA-Z0-9_-]{6,16}$/.test(this.username);
         if(isOk){
-          this.checkStatus.push({'email':true});
+          this.checkStatus.username=true;
         }else{
-          this.checkStatus.push({'email':false});
+          this.checkStatus.username=false;
         }
       }
     },
@@ -84,23 +85,81 @@ export default {
       if(this.phone!=''){
         const isOk=/^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/.test(this.phone);
         if(isOk){
-          this.checkStatus.push({'email':true});
+          this.checkStatus.phone=true;
         }else{
-          this.checkStatus.push({'email':false});
+          this.checkStatus.phone=false;
         }
       }
     },
     checkRegisterInfo(){
-      console.log(this.checkStatus);
-      this.checkStatus.forEach((element,key) => {
-        console.log(key);
-        if(element==false){
-          console.log(element);
-          Toast({
-            message:'key格式不符合要求,请修改!'
-          });
+      if(this.checkStatus){
+        for(let key in this.checkStatus){
+          console.log(this.checkStatus.key);
+          if(this.checkStatus.key==false){
+            Toast({
+              message:'格式不符合要求,请修改!'
+            });
+            return;
+          }else{
+            Toast({
+              message:'提交成功!'
+            });
+          }
         }
-      });
+      }else{
+        Toast({
+          message:'格式不符合要求,请修改!'
+        });
+      }
+      
+    }
+  },
+  computed: {
+    emailStatus(){
+      console.log(this.checkStatus.email);
+      if(this.checkStatus.email==true){
+        return 'success';
+      }
+      else if(this.checkStatus.email==false){
+        return 'error';
+      }
+      else{
+        return '';
+      }
+      console.log(this.checkStatus);
+    },
+    phoneStatus(){
+      if(this.checkStatus.phone==true){
+        return 'success';
+      }
+      else if(this.checkStatus.phone==false){
+        return 'error';
+      }
+      else{
+        return '';
+      }
+    },
+    passwordStatus(){
+      if(this.checkStatus.password==true){
+        return 'success';
+      }
+      else if(this.checkStatus.password==false){
+        return 'error';
+      }
+      else{
+        return '';
+      }
+    },
+    usernameStatus(){
+      if(this.checkStatus.username==true){
+        return 'success';
+      }
+      else if(this.checkStatus.username==false){
+        return 'error';
+      }
+      else{
+        return '';
+      }  
     }
   }
 }
