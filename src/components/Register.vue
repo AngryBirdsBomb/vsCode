@@ -227,9 +227,11 @@ export default {
     padding:0;
 }
 .userInfo{
-  background-color: #171717;
   color: #fff;
   min-height: 13.75rem;
+}
+.userinfoBg{
+  background-color: #171717;
 }
 .userImg{
   padding-top:2.5rem;

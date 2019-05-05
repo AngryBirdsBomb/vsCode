@@ -12,7 +12,7 @@
           </i>
           <i class="el-icon-setting" @click="lookResult"></i>
         </div>
-        <ul class="userInfo">
+        <ul class="userInfo userinfoBg">
           <li  class="userImg">
             <img src="../assets/userImg.png" alt="" @click="login(1)"/>
           </li>
@@ -175,9 +175,11 @@ export default {
     padding:0;
 }
 .userInfo{
-  background-color: #171717;
   color: #fff;
   min-height: 13.75rem;
+}
+.userInfoBg{
+  background-color: #171717;
 }
 .userImg{
   padding-top:2.5rem;
