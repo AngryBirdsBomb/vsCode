@@ -76,7 +76,7 @@
           </i>
           <i class="el-icon-setting" @click="lookResult"></i>
         </div>
-        <ul class="userInfo">
+        <ul class="userInfo userInfoBg">
           <li  class="userImg">
             <img src="../assets/userImg.png" alt="" @click="login(1)"/>
           </li>
