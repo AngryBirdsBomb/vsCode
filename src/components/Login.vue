@@ -21,8 +21,8 @@
             <img src="../assets/logo.png" height="45px" width="100px">
           </mt-field>
           <div class="submitBox">
-            <mt-button type="primary" size="small" @click.native="checkRegisterInfo">登录</mt-button>
-            <mt-button type="danger" size="small">清除</mt-button>
+            <mt-button type="primary" size="small" @click.native="checkLoginInfo">登录</mt-button>
+            <mt-button type="danger" size="small" @click.native="clearInput">清除</mt-button>
           </div>
           <div class="helpBox clearfix">
             <router-link to="/register" class="fr">注册</router-link>
@@ -117,8 +117,9 @@ export default {
           el.target.style.backgroundColor='rgba(239, 79, 79, 0.4)';
       }
     },
-    checkRegisterInfo(){
+    checkLoginInfo(){
       console.log(this.checkStatus);
+      this.$router.push({name:'person_center',params:{userId:1,userName:'用户二'}});
       const arr=[];
       for(let key in this.checkStatus){
         //console.log(this.checkStatus[key]);
@@ -128,8 +129,9 @@ export default {
       }
       if(arr.length<=0){
         Toast({
-          message:'提交成功!'
+          message:'登录成功!'
         });
+        //this.$router.push({name:'person_center',params:{userId:1,userName:333}});
         this.clearInput();
       }else{
         Toast({
@@ -224,6 +226,7 @@ export default {
 .userInfo{
   background-color: #171717;
   color: #fff;
+  min-height: 13.75rem;
 }
 .userImg{
   padding-top:2.5rem;

@@ -5,9 +5,11 @@ import CommodityDetails from '../components/Commodity_details.vue'
 import Register from '../components/Register.vue'
 import Login from '../components/Login.vue'
 export default{
+    /* mode:'history',
+    fallback:true,  */
     routes:[
-        { path: '/home', component: Home },
-        { path: '/person_center/:userId', component: PersonCenter },
+        { path: '/home', component: Home,name:'home' },
+        { path: '/person_center/:userId?/:userName?', component: PersonCenter,name:'person_center',props:true },
         { 
             path: '/carts', 
             component: Carts,

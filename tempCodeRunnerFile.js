@@ -1,0 +1,1 @@
+Object.keys(require("./package.json").dependencies)

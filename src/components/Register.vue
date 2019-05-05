@@ -132,7 +132,7 @@ export default {
       }
       if(arr.length<=0){
         Toast({
-          message:'提交成功!'
+          message:'注册成功!'
         });
         this.clearInput();
       }else{
@@ -229,6 +229,7 @@ export default {
 .userInfo{
   background-color: #171717;
   color: #fff;
+  min-height: 13.75rem;
 }
 .userImg{
   padding-top:2.5rem;

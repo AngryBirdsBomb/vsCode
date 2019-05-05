@@ -5,19 +5,20 @@
               <mt-button icon="back">返回</mt-button>
           </router-link>
       </mt-header>
-      <div class="personCenterListBox">
+      <div class="personCenterListBox" v-if="userId==1">
         <div class="userOptionBox">
           <i class="el-icon-message messageBtn">
             <mt-badge type="error" size="small" class="messageTip">99+</mt-badge>
           </i>
-          <i class="el-icon-setting"></i>
+          <i class="el-icon-setting" @click="lookResult"></i>
         </div>
         <ul class="userInfo">
           <li  class="userImg">
-            <img src="../assets/userImg.png" alt="" @click="login(2)"/>
+            <img src="../assets/userImg.png" alt="" @click="login(1)"/>
           </li>
           <li  class="userName">
-            <p @click="login(1)">用户名</p>
+            <p><router-link :to="{path:'/person_center',query:{userId:132,userName:'456'}}">{{userInfo[0].name}}get</router-link></p>
+            <p><router-link :to="{name:'person_center',params:{userId:123,userName:'456'}}">{{userInfo[1].name}}post</router-link></p>
           </li>
           <li class="userOtherInfo">
             <p>
@@ -36,33 +37,62 @@
         </ul>
         <ul class="personCenterList">
           <li class="personCenterItem">
-            <mt-cell title="我的通知" is-link to="/person_center/1">
+            <mt-cell title="我的通知" is-link to="/person_center/">
               <img slot="icon" src="../assets/icon-nav-001.png" alt="" />
               <mt-badge type="error" size="small">99+</mt-badge>
             </mt-cell>
           </li>
           <li class="personCenterItem">
-            <mt-cell title="我的收藏" is-link to="/person_center/1">
+            <mt-cell title="我的收藏" is-link to="/person_center/">
               <img slot="icon" src="../assets/icon-nav-001.png" alt="" />
             </mt-cell>
           </li>
           <li class="personCenterItem">
-            <mt-cell title="帐号管理" is-link to="/person_center/1">
+            <mt-cell title="帐号管理" is-link to="/person_center/">
               <img slot="icon" src="../assets/icon-nav-001.png" alt="" />
             </mt-cell>
           </li>
           <li class="personCenterItem">
-            <mt-cell title="帐号信息" is-link to="/person_center/1">
+            <mt-cell title="帐号信息" is-link to="/person_center/">
               <img slot="icon" src="../assets/icon-nav-001.png" alt="" />
             </mt-cell>
           </li>
           <li class="personCenterItem">
-            <mt-cell title="意见反馈" is-link to="/person_center/1">
+            <mt-cell title="意见反馈" is-link to="/person_center/">
               <img slot="icon" src="../assets/icon-nav-001.png" alt="" />
             </mt-cell>
           </li>
           <li class="personCenterItem">
-            <mt-cell title="关于我们" is-link to="/person_center/1">
+            <mt-cell title="关于我们" is-link to="/person_center/">
+              <img slot="icon" src="../assets/icon-nav-001.png" alt="" />
+            </mt-cell>
+          </li>
+        </ul>
+      </div>
+      <div class="personCenterListBox" v-else>
+        <div class="userOptionBox">
+          <i class="el-icon-message messageBtn">
+            <mt-badge type="error" size="small" class="messageTip">99+</mt-badge>
+          </i>
+          <i class="el-icon-setting" @click="lookResult"></i>
+        </div>
+        <ul class="userInfo">
+          <li  class="userImg">
+            <img src="../assets/userImg.png" alt="" @click="login(1)"/>
+          </li>
+          <li  class="userName">
+            <p><router-link :to="{path:'/person_center',query:{userId:132,userName:'456'}}">点击登录</router-link></p>
+            <p><router-link :to="{name:'person_center',params:{userId:123,userName:'456'}}">点击登录</router-link></p>
+          </li>
+        </ul>
+        <ul class="personCenterList">
+          <li class="personCenterItem">
+            <mt-cell title="意见反馈" is-link to="/person_center/">
+              <img slot="icon" src="../assets/icon-nav-001.png" alt="" />
+            </mt-cell>
+          </li>
+          <li class="personCenterItem">
+            <mt-cell title="关于我们" is-link to="/person_center/">
               <img slot="icon" src="../assets/icon-nav-001.png" alt="" />
             </mt-cell>
           </li>
@@ -78,7 +108,7 @@ export default {
       userInfo:[
         {
           id:'101',
-          name:'userName',
+          name:'用户一',
           nickname:'一二三',
           subscribe:20,
           fans:33,
@@ -87,7 +117,7 @@ export default {
         },
         {
           id:'102',
-          name:'userName',
+          name:'用户二',
           nickname:'一二三',
           subscribe:20,
           fans:33,
@@ -97,6 +127,10 @@ export default {
       ]
     };
   },
+  props:{
+    userId:Number,
+    userName:String
+  },
   methods:{
     login(loginType){
       console.log(1);
@@ -105,6 +139,9 @@ export default {
       }else{
         this.$router.replace({path:'/register'});
       }
+    },
+    lookResult(){
+      console.log(this.userId+'<=>'+this.userName);
     }
   }
 }
@@ -140,6 +177,7 @@ export default {
 .userInfo{
   background-color: #171717;
   color: #fff;
+  min-height: 13.75rem;
 }
 .userImg{
   padding-top:2.5rem;
@@ -155,6 +193,10 @@ export default {
 .userName p{
   width: 5rem;
   margin: 0 auto;
+}
+.userName>p>a{
+  color: #fff;
+  text-decoration: none;
 }
 .userOtherInfo{
   display:-webkit-flex;

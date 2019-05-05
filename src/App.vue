@@ -6,7 +6,7 @@
     <mt-tabbar fixed>
       <mt-tab-item id="主页"><router-link to="/home"><i class="homeIcon"></i><span>主页</span></router-link></mt-tab-item>
       <mt-tab-item id="购物车"><router-link to="/carts"><i class="cartsIcon"></i><span>购物车</span></router-link></mt-tab-item>
-      <mt-tab-item id="个人中心"><router-link to="/person_center/1"><i class="personCenterIcon"></i><span>个人中心</span></router-link></mt-tab-item>
+      <mt-tab-item id="个人中心"><router-link to="/person_center"><i class="personCenterIcon"></i><span>个人中心</span></router-link></mt-tab-item>
     </mt-tabbar>
   </div>
 </template>
