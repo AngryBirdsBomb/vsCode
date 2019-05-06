@@ -76,6 +76,14 @@ module.exports = {
           outputPath:'fonts/'
         }
       },
+      { 
+        test: /\.json$/,
+        loader: 'json-loader',
+        options:{
+          publicPath:'dist/data/',
+          outputPath:'data/'
+        }
+      },
       {
         test: /\.(png|jpg|gif|svg|jpeg)$/,
         use: {

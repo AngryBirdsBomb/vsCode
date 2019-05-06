@@ -308,7 +308,8 @@
 <script type="text/javascript">
 import Axios from 'axios'
 import {Toast,picker} from 'mint-ui'
-const data= ()=>import('../assets/data.json') 
+/* const dataJson= ()=>import('../assets/data.json') 
+const aJson= ()=>import('../assets/a.json') */
 export default {
   name: "commodity_details",
   data () {
@@ -470,7 +471,7 @@ export default {
     this.commodityId=this.list.id;
     Axios({
       method:'get',
-      url:'src/assets/data.json',
+      url:'dist/data/data.json',
       data:{}
     }).then((res)=>{
       console.log(res.data);
@@ -501,7 +502,7 @@ export default {
       if(this.commodityId!=''&&this.selColor!=''&&this.selMemories!=''&&this.selCount!=''){
         Axios({
           method:'get',
-          url:'src/assets/a.json',
+          url:'dist/data/a.json',
           data:{
             'commodityId':this.commodityId,
             'selCount':this.selCount,
