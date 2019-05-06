@@ -17,7 +17,7 @@ let BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlug
 module.exports = {
   entry: {
     build:'./src/main.js',
-    vendor: Object.keys(packagejson.dependencies)//获取生产环境依赖的库,vue,vuex,vue-router,element-ui,mint-ui,animate,axios等
+    /* vendor: Object.keys(packagejson.dependencies)  */    //获取生产环境依赖的库,vue,vuex,vue-router,element-ui,mint-ui,animate,axios等
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -96,8 +96,8 @@ module.exports = {
     ]
   },
   plugins: [
-		new HtmlWebpackPlugin({
-			  /* filename: path.join(__dirname, 'entry.html'),  */// 生成的html(绝对路径：可用于生成到根目录)
+    new HtmlWebpackPlugin({
+      /* filename: path.join(__dirname, 'entry.html'),  */// 生成的html(绝对路径：可用于生成到根目录)
         filename: '../entry.html', // 生成的html文件名（相对路径：将生成到output.path指定的dist目录下）
         template: './template.html', // 以哪个文件作为模板，不指定的话用默认的空模板
         /* chunks:['runtime','vendor','build'] */
@@ -107,8 +107,20 @@ module.exports = {
         name: ['vendor','runtime'],
         filename: '[name].js'
     }), */
+    new webpack.HashedModuleIdsPlugin({       //用于解决entry入口文件顺序发生改变后，chunkhash跟着改变的问题，把chunkhash转化为路径id
+        hashFunction: 'md5',
+        hashDigest: 'hex',
+        hashDigestLength: 8
+    }),
+    new ExtractTextPlugin({
+      /* disable: process.env.NODE_ENV == 'development' ? true : false, */  // 开发环境下直接内联，不抽离
+      filename: 'style/[name].css', // 单个entry时，可写死
+      publicPath:'dist/style/',
+      disable:false,          //是否禁用插件
+      /* allChunks: true */         //将该参数配置为true，那么所有分离文件的样式也会全部压缩到一个文件上,当有多个入口文件时，需要开启
+    }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
+      name: 'vendor',                 //提取node_modules目录下的第三方库文件,如mint-ui
       filename: 'js/[name].js',
       minChunks: function (module,count) {
         console.log(module.resource,`引用次数${count}`);
@@ -120,26 +132,26 @@ module.exports = {
           )
       }
     }),
-    new webpack.optimize.CommonsChunkPlugin({
+    /* new webpack.optimize.CommonsChunkPlugin({
         name: 'runtime',
+        filename: 'js/[name].[chunkhash]js',
+        chunks: ['vendor']     //从vendor中提取webpack运行文件,以runtime命名
+    }), */
+    new webpack.optimize.CommonsChunkPlugin({
+        name: 'runtime',                     //当我们使用CommonsChunkPlugin分离代码时，被分离出来的代码（本文中的mint-ui库，被打包为vendor。），会默认被移动到entry中最后一个入口进行打包（第一个入口是main.js）。重要的是，chunk manifest将随着这些被分离出来的代码共同打包
         filename: 'js/[name].js',
-        chunks: ['vendor']    //来源是vendor.js
+        chunks:['vendor']
     }),
     new webpack.optimize.CommonsChunkPlugin({
         name: 'common',
-        filename: 'js/[name].js',
-        chunks:['build']             //从main.js文件中提取自定义公共模块
-    }), 
+        filename: 'js/[name].[chunkhash].js',
+        chunks:['build']             //从main.js文件中提取自定义公共模块,以common命名
+    })
     /* new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
         filename: '[name].js'
     }), */
-    new ExtractTextPlugin({
-      /* disable: process.env.NODE_ENV == 'development' ? true : false, */  // 开发环境下直接内联，不抽离
-      filename: 'style/[name].css', // 单个entry时，可写死
-      publicPath:'dist/style/',
-      allChunks: true
-    })
+    
     
 	],
   resolve: {
