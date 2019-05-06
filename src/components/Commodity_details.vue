@@ -295,10 +295,11 @@
             <h4 class="modal-header">送至</h4>
             <ul class="modal-body">
               <li class="adress">
-                <!-- <mt-picker :slots="slots" @change="selAdress" value-key="name"></mt-picker> -->
+                <h3 v-text="adressInfo" class="adressInfo"></h3>
+                <mt-picker :slots="slots" @change="selAdress" value-key="name"></mt-picker>
               </li>
             </ul>
-            <mt-button class="closeBtn" type="danger" @click="popupShow=false">确定</mt-button>
+            <mt-button class="closeBtn" type="danger" @click="addAdress">确定</mt-button>
           </div>
         </mt-popup>
       </div>
@@ -306,7 +307,8 @@
 </template>
 <script type="text/javascript">
 import Axios from 'axios'
-import {Toast} from 'mint-ui'
+import {Toast,picker} from 'mint-ui'
+const data= ()=>import('../assets/data.json') 
 export default {
   name: "commodity_details",
   data () {
@@ -428,7 +430,6 @@ export default {
       selMemories:'64g',
       selCount:1,
       commodityId:'',
-      url:'./src/assets/a.txt',
       isDisabled1:false,
       isDisabled2:false,
       couponStatus1:'立即领取',
@@ -437,272 +438,11 @@ export default {
       rateCount1:5,
       rateCount2:5,
       rateCount3:5,
-      /* slots: [
-        {
-          'flex': 1,
-          'values': this.getProvinceArr(),  //省,
-          'className': 'province',
-          'textAlign': 'left'
-        }, 
-        {
-          'divider': true,
-          'content': '-',
-          'className': 'divider'
-        }, 
-        {
-          'flex': 1,
-          'values': this.getCityArr('北京'),
-          'className': 'city',
-          'textAlign': 'left'
-        }, 
-        {
-          'divider': true,
-          'content': '-',
-          'className': 'divider'
-        }, 
-        {
-          'flex': 1,
-          'values': this.getDistrictArr('北京','北京市'),
-          'className': 'district',
-          'textAlign': 'left'
-        }, 
-        {
-          'divider': true,
-         'content': '-',
-          'className': 'divider'
-        }, 
-        {
-          'flex': 1,
-          'values': this.getStreetArr('北京','北京','大兴区'),
-          'className': 'street',
-          'textAlign': 'left'
-        }
-      ], */
-      adress:'北京大兴',
+      /* slots: [],  */
+      adress:'北京市-大兴区',
+      adressInfo:'',
       regionInit:false,
-      threeLevelAddress:[
-        {
-          "code": "110000",
-          "name": "北京市",
-          "children": [
-            {
-              "code": "110100",
-              "name": "北京市",
-              "children": [
-                {
-                  "code": "110101",
-                  "name": "东城区",
-                  "children":[
-                    {
-                      'code':'1111111111',
-                      'name':'清源街道'
-                    },
-                    {
-                      'code':'222222222',
-                      'name':'兴丰街道'
-                    },
-                    {
-                      'code':'333333333',
-                      'name':'林校路街道'
-                    },
-                    {
-                      'code':'444444444',
-                      'name':'观音寺街道'
-                    },
-                    {
-                      'code':'555555555',
-                      'name':'天宫院街道'
-                    },
-                    {
-                      'code':'666666666',
-                      'name':'高米店街道'
-                    },
-                    {
-                      'code':'777777777',
-                      'name':'荣华街道'
-                    },
-                    {
-                      'code':'888888888',
-                      'name':'博兴街道'
-                    }
-                  ]
-                },
-                {
-                  "code": "110102",
-                  "name": "西城区"
-                },
-                {
-                  "code": "110105",
-                  "name": "朝阳区"
-                },
-                {
-                  "code": "110106",
-                  "name": "丰台区"
-                },
-                {
-                  "code": "110107",
-                  "name": "石景山区"
-                },
-                {
-                  "code": "110108",
-                  "name": "海淀区"
-                },
-                {
-                  "code": "110109",
-                  "name": "门头沟区"
-                },
-                {
-                  "code": "110111",
-                  "name": "房山区"
-                },
-                {
-                  "code": "110112",
-                  "name": "通州区"
-                },
-                {
-                  "code": "110113",
-                  "name": "顺义区"
-                },
-                {
-                  "code": "110114",
-                  "name": "昌平区"
-                },
-                {
-                  "code": "110115",
-                  "name": "大兴区"
-                },
-                {
-                  "code": "110116",
-                  "name": "怀柔区"
-                },
-                {
-                  "code": "110117",
-                  "name": "平谷区"
-                },
-                {
-                  "code": "110128",
-                  "name": "密云县"
-                },
-                {
-                  "code": "110129",
-                  "name": "延庆县"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "code": "120000",
-          "name": "天津市",
-          "children": [
-            {
-              "code": "120100",
-              "name": "天津市",
-              "children": [
-                {
-                  "code": "120101",
-                  "name": "和平区",
-                  "children":[
-                    {
-                      'code':'1111111111',
-                      'name':'清源街道'
-                    },
-                    {
-                      'code':'222222222',
-                      'name':'兴丰街道'
-                    },
-                    {
-                      'code':'333333333',
-                      'name':'林校路街道'
-                    },
-                    {
-                      'code':'444444444',
-                      'name':'观音寺街道'
-                    },
-                    {
-                      'code':'555555555',
-                      'name':'天宫院街道'
-                    },
-                    {
-                      'code':'666666666',
-                      'name':'高米店街道'
-                    },
-                    {
-                      'code':'777777777',
-                      'name':'荣华街道'
-                    },
-                    {
-                      'code':'888888888',
-                      'name':'博兴街道'
-                    }
-                  ]
-                },
-                {
-                  "code": "120102",
-                  "name": "河东区"
-                },
-                {
-                  "code": "120103",
-                  "name": "河西区"
-                },
-                {
-                  "code": "120104",
-                  "name": "南开区"
-                },
-                {
-                  "code": "120105",
-                  "name": "河北区"
-                },
-                {
-                  "code": "120106",
-                  "name": "红桥区"
-                },
-                {
-                  "code": "120110",
-                  "name": "东丽区"
-                },
-                {
-                  "code": "120111",
-                  "name": "西青区"
-                },
-                {
-                  "code": "120112",
-                  "name": "津南区"
-                },
-                {
-                  "code": "120113",
-                  "name": "北辰区"
-                },
-                {
-                  "code": "120114",
-                  "name": "武清区"
-                },
-                {
-                  "code": "120115",
-                  "name": "宝坻区"
-                },
-                {
-                  "code": "120116",
-                  "name": "滨海新区"
-                },
-                {
-                  "code": "120121",
-                  "name": "宁河县"
-                },
-                {
-                  "code": "120123",
-                  "name": "静海县"
-                },
-                {
-                  "code": "120125",
-                  "name": "蓟县"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-      /* adress:{
+      threeLevelAddress:[]/* adress:{
         'province':['北京','上海','广东'],  //省
         'city':[
           ['北京'],     //市
@@ -728,6 +468,16 @@ export default {
     this.personNumber=this.list.personNumber;
     this.favorablePrice=this.list.favorablePrice;
     this.commodityId=this.list.id;
+    Axios({
+      method:'get',
+      url:'src/assets/data.json',
+      data:{}
+    }).then((res)=>{
+      console.log(res.data);
+      this.threeLevelAddress=res.data;
+      this.regionInit=true;
+    });
+    
   },
   methods:{
     handleChange(index){
@@ -751,7 +501,7 @@ export default {
       if(this.commodityId!=''&&this.selColor!=''&&this.selMemories!=''&&this.selCount!=''){
         Axios({
           method:'get',
-          url:this.url,
+          url:'src/assets/a.json',
           data:{
             'commodityId':this.commodityId,
             'selCount':this.selCount,
@@ -760,7 +510,6 @@ export default {
           }
         }).then(function(res){
           console.log(res.data);
-          console.error(res.data.dataS);
           _this.popupShow=false;
           if(res.data.dataS=='ok'){
             Toast({
@@ -796,9 +545,14 @@ export default {
       }
       
     },
+    addAdress(){
+      this.popupShow=false;
+      console.log(this.adressInfo);
+      this.adress=this.adressInfo;
+    },
     selAdress(picker, values){
-      console.log(picker);
-      console.log(values);
+      //console.log(picker);
+      //console.log(values);
       if (this.regionInit){
           //取值并赋值
         /* this.region = values[0]["name"] + values[1]["name"] + values[2]["name"];
@@ -809,13 +563,18 @@ export default {
         this.cityCode = values[1]["code"];
         this.countyCode = values[2]["code"]; */
 
-        console.log(picker.getSlotValue(0));
-        console.table(picker.getSlotValues(0));
-        console.table(picker.getValues());
+        //console.log(picker.getSlotValue(0));
+        //console.table(picker.getSlotValues(0));
+        //console.table(picker.getValues());
           //给市、县赋值
         picker.setSlotValues(1, this.getCityArr(values[0]["name"]));
         picker.setSlotValues(2, this.getDistrictArr(values[0]["name"], values[1]["name"]));
         picker.setSlotValues(3, this.getStreetArr(values[0]["name"], values[1]["name"],values[2]["name"]));
+        let arr=[];
+        picker.getValues().forEach((item)=>{
+          arr.push(item.name);
+        });
+        this.adressInfo=arr.join('-');
       }else {
         this.regionInit = true;
       }
@@ -944,6 +703,51 @@ export default {
         return oDate.getFullYear()+'-'+MM+'-'+DD+' '+hh+':'+mm+':'+ss;
     }
 
+  },
+  computed: {
+    slots(){
+        return [
+          {
+            'flex': 1,
+            'values': this.getProvinceArr(),  //省,
+            'className': 'province',
+            'textAlign': 'left'
+          }, 
+          {
+            'divider': true,
+            'content': '-',
+            'className': 'divider'
+          }, 
+          {
+            'flex': 1,
+            'values': this.getCityArr('北京市'),
+            'className': 'city',
+            'textAlign': 'left'
+          }, 
+          {
+            'divider': true,
+            'content': '-',
+            'className': 'divider'
+          }, 
+          {
+            'flex': 1,
+            'values': this.getDistrictArr('北京市','北京市'),
+            'className': 'district',
+            'textAlign': 'left'
+          }, 
+          {
+            'divider': true,
+          'content': '-',
+            'className': 'divider'
+          }, 
+          {
+            'flex': 1,
+            'values': this.getStreetArr('北京市','北京市','大兴区'),
+            'className': 'street',
+            'textAlign': 'left'
+          }
+        ]
+    }
   }
 }
 </script>
@@ -1144,6 +948,11 @@ ul,li{
   font-size:.75rem;
   padding:0 .375rem;
   width:3.75rem;
+}
+.adress>.adressInfo{
+  text-align: center;
+  line-height: 1.5rem;
+  margin: 0;
 }
 .adress .picker-slot{
   font-size: .75rem;
