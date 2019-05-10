@@ -110,7 +110,7 @@ module.exports = {
         template: './template.html', // 以哪个文件作为模板，不指定的话用默认的空模板
         /* chunks:['runtime','vendor','build'] */
     }),
-    new BundleAnalyzerPlugin(),     //webpack打包可视化工具
+    new BundleAnalyzerPlugin({analyzerPort: 8887}),     //webpack打包可视化工具
     /* new webpack.optimize.CommonsChunkPlugin({
         name: ['vendor','runtime'],
         filename: '[name].js'
@@ -161,7 +161,10 @@ module.exports = {
     }), */
     
     
-	],
+  ],
+  externals: {
+    /* mathTools: "tools" */    //使webpack不处理相应的库，可以在首页以cdn形式引入，代码不会打包到vendor.js
+  },
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
